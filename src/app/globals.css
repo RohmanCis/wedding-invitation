@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f6f1eb;
+  --foreground: #2a2522;
+
+  --ivory: #f8f4ef;
+  --champagne: #d6b98c;
+  --mocha: #6b5b52;
+  --sage: #a8b2a1;
+  --rose: #d9b8b0;
+  --soft-black: #1a1817;
+
+  --shadow-soft:
+    0 10px 30px rgba(0, 0, 0, 0.04),
+    0 4px 12px rgba(0, 0, 0, 0.03);
+
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background:
+    radial-gradient(circle at top, rgba(214, 185, 140, 0.08), transparent 40%),
+    var(--background);
+
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.03em;
+}
+
+button,
+a {
+  transition:
+    transform 0.4s var(--ease-premium),
+    opacity 0.4s var(--ease-premium),
+    background-color 0.4s var(--ease-premium);
+}
+
+.section-padding {
+  padding-inline: 24px;
+  padding-block: 96px;
+}
+
+.container-mobile {
+  width: 100%;
+  max-width: 430px;
+  margin-inline: auto;
+  position: relative;
+}
+
+.glass-effect {
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.soft-shadow {
+  box-shadow: var(--shadow-soft);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
