@@ -22,8 +22,7 @@ type InvitationState = {
 
   isOpened: boolean;
   isMusicPlaying: boolean;
-  selectedGalleryImage:
-  string | null;
+  selectedGalleryIndex: number | null;
   activeSection: string;
   isCopied: boolean;
   wishes: Wish[];
@@ -36,7 +35,7 @@ type InvitationState = {
   ) => void;
 
   openGallery: (
-    image: string
+    index: number
   ) => void;
 
   closeGallery: () => void;
@@ -60,7 +59,7 @@ export const useInvitationStore =
 
       isMusicPlaying: false,
 
-      selectedGalleryImage: null,
+      selectedGalleryIndex: null,
 
       activeSection: "home",
 
@@ -85,18 +84,14 @@ export const useInvitationStore =
             value,
         }),
 
-      openGallery: (
-        image
-      ) =>
+      openGallery: (index) =>
         set({
-          selectedGalleryImage:
-            image,
+          selectedGalleryIndex: index,
         }),
 
       closeGallery: () =>
         set({
-          selectedGalleryImage:
-            null,
+          selectedGalleryIndex: null,
         }),
 
       setCopied: (

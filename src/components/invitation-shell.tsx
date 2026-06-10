@@ -14,6 +14,7 @@ import { WishesSection } from "./sections/wishes-section";
 import { GiftSection } from "./sections/gift-section";
 import { HeroSection } from "./sections/hero-section";
 import { FooterSection } from "./sections/footer-section";
+import { useEffect } from "react";
 type InvitationShellProps = {
   guestName: string;
 };
@@ -21,6 +22,12 @@ type InvitationShellProps = {
 export function InvitationShell({ guestName }: InvitationShellProps) {
   const isOpened = useInvitationStore((state) => state.isOpened);
 
+  useEffect(() => {
+    window.history.scrollRestoration = "manual";
+
+    window.scrollTo(0, 0);
+  }, []);
+  
   return (
     <>
       {!isOpened && <OpeningScreen guestName={guestName} />}

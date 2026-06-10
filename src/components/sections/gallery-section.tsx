@@ -113,7 +113,7 @@ export function GallerySection() {
                 `}
               >
                 <button
-                  onClick={() => openGallery(image)}
+                  onClick={() => openGallery(index)}
                   title={`Open gallery image ${index + 1}`}
                   aria-label={`Open gallery image ${index + 1}`}
                   className="
