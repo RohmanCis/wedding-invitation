@@ -16,40 +16,29 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title:
-    "Panji & Anita Wedding Invitation",
-
-  description:
-    "Join us in celebrating our special day.",
-
+  title: "Panji & Anita Wedding Invitation",
+  description: "Join us to celebrate our wedding day.",
   openGraph: {
-
-    title:
-      "Panji & Anita Wedding Invitation",
-
-    description:
-      "Join us in celebrating our special day.",
-
+    title: "Panji & Anita Wedding Invitation",
+    description: "Join us to celebrate our wedding day.",
+    url: "https://wedding-invitation-dun-omega.vercel.app",
+    siteName: "Panji & Anita Wedding",
     images: [
-      "/images/og-cover.png",
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Panji & Anita Wedding",
+      },
     ],
-
+    locale: "id_ID",
     type: "website",
   },
-
   twitter: {
-
     card: "summary_large_image",
-
-    title:
-      "Panji & Anita Wedding Invitation",
-
-    description:
-      "Join us in celebrating our special day.",
-
-    images: [
-      "/images/og-cover.png",
-    ],
+    title: "Panji & Anita Wedding Invitation",
+    description: "Join us to celebrate our wedding day.",
+    images: ["/og-image.png"],
   },
 };
 
