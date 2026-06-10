@@ -21,36 +21,40 @@ export function FloatingNavbar() {
   return (
     <nav
       className="
-        fixed
-        bottom-6
-        left-1/2
-        z-50
+    fixed
+    left-1/2
+    bottom-[max(1.5rem,env(safe-area-inset-bottom))]
+    z-50
 
-        flex
-        -translate-x-1/2
-        items-center
-        gap-2
+    flex
+    items-center
+    gap-2
 
-        rounded-full
+    -translate-x-1/2
 
-        border border-white/10
+    rounded-full
 
-        bg-[rgba(20,20,20,0.25)]
+    border border-white/12
 
-        px-4
-        py-3
+    bg-[rgba(18,18,18,0.42)]
 
-        backdrop-blur-2xl
+    px-4
+    py-3
 
-        shadow-[
-          0_10px_40px_rgba(
-            0,
-            0,
-            0,
-            0.28
-          )
-        ]
-      "
+    backdrop-blur-xl
+
+    shadow-[
+      0_12px_40px_rgba(
+        0,
+        0,
+        0,
+        0.32
+      )
+    ]
+
+    transition-all
+    duration-500
+  "
     >
       {navigationItems.map((item) => {
         const Icon = item.icon;
@@ -64,58 +68,76 @@ export function FloatingNavbar() {
             aria-label={`Navigate to ${item.id} section`}
             onClick={() => scrollToSection(item.id)}
             className={`
-              flex
-              h-11
-              w-11
-              items-center
-              justify-center
+          group
 
-              rounded-full
+          relative
 
-              transition-all
-              duration-500
+          flex
+          h-11
+          w-11
 
-              ${
-                isActive
-                  ? `
-                    bg-[rgba(
-                      214,
-                      185,
-                      140,
-                      0.18
-                    )]
+          items-center
+          justify-center
 
-                    text-white
+          rounded-full
 
-                    shadow-[
-                      0_0_30px_rgba(
-                        214,
-                        185,
-                        140,
-                        0.20
-                      )
-                    ]
-                  `
-                  : `
-                    text-white/65
+          transition-all
+          duration-500
 
-                    hover:bg-white/10
+          active:scale-90
 
-                    hover:text-white
+          ${
+            isActive
+              ? `
+                scale-105
 
-                    hover:shadow-[
-                      0_0_25px_rgba(
-                        255,
-                        255,
-                        255,
-                        0.08
-                      )
-                    ]
-                  `
-              }
-            `}
+                bg-[rgba(
+                  214,
+                  185,
+                  140,
+                  0.18
+                )]
+
+                text-white
+
+                shadow-[
+                  0_0_30px_rgba(
+                    214,
+                    185,
+                    140,
+                    0.22
+                  )
+                ]
+              `
+              : `
+                text-white/65
+
+                hover:bg-white/10
+                hover:text-white
+
+                active:bg-white/15
+
+                hover:shadow-[
+                  0_0_20px_rgba(
+                    255,
+                    255,
+                    255,
+                    0.08
+                  )
+                ]
+              `
+          }
+        `}
           >
-            <Icon size={18} />
+            <Icon
+              size={18}
+              className="
+            transition-transform
+            duration-500
+
+            group-hover:scale-110
+          "
+            />
           </button>
         );
       })}

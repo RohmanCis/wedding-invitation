@@ -1,61 +1,51 @@
-
 "use client";
 
 import Image from "next/image";
+import { useEffect } from "react";
 
-import {
-  X,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
-import { weddingData }
-  from "../../data/wedding";
+import { weddingData } from "../../data/wedding";
 
-import { useInvitationStore }
-  from "../../stores/invitation";
+import { useInvitationStore } from "../../stores/invitation";
 
 const { gallery } = weddingData;
 
 export function GalleryModal() {
+  const { selectedGalleryIndex, openGallery, closeGallery } =
+    useInvitationStore();
 
-  const {
-    selectedGalleryIndex,
-    openGallery,
-    closeGallery,
-  } = useInvitationStore();
-
-  if (
-    selectedGalleryIndex === null
-  ) {
+  if (selectedGalleryIndex === null) {
     return null;
   }
 
-  const currentImage =
-    gallery[selectedGalleryIndex];
+  const currentImage = gallery[selectedGalleryIndex];
 
   const nextImage = () => {
-
     const nextIndex =
-      selectedGalleryIndex ===
-      gallery.length - 1
+      selectedGalleryIndex === gallery.length - 1
         ? 0
         : selectedGalleryIndex + 1;
 
     openGallery(nextIndex);
-
   };
 
   const prevImage = () => {
-
     const prevIndex =
       selectedGalleryIndex === 0
         ? gallery.length - 1
         : selectedGalleryIndex - 1;
 
     openGallery(prevIndex);
-
   };
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
 
   return (
     <div
@@ -75,7 +65,6 @@ export function GalleryModal() {
         animate-[fadeIn_0.4s_ease-out]
       "
     >
-
       {/* Close Button */}
       <button
         onClick={closeGallery}
@@ -217,7 +206,6 @@ export function GalleryModal() {
           className="
             object-contain
           "
-          priority
         />
       </div>
 
@@ -250,7 +238,6 @@ export function GalleryModal() {
         {" / "}
         {gallery.length}
       </div>
-
     </div>
   );
 }
