@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+
 import { useEffect } from "react";
 
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
@@ -15,11 +16,27 @@ export function GalleryModal() {
   const { selectedGalleryIndex, openGallery, closeGallery } =
     useInvitationStore();
 
+  /*
+  -----------------------------
+  GUARD
+  -----------------------------
+  */
+
   if (selectedGalleryIndex === null) {
     return null;
   }
 
   const currentImage = gallery[selectedGalleryIndex];
+
+  if (!currentImage) {
+    return null;
+  }
+
+  /*
+  -----------------------------
+  NAVIGATION
+  -----------------------------
+  */
 
   const nextImage = () => {
     const nextIndex =
@@ -39,6 +56,12 @@ export function GalleryModal() {
     openGallery(prevIndex);
   };
 
+  /*
+  -----------------------------
+  BODY SCROLL LOCK
+  -----------------------------
+  */
+
   useEffect(() => {
     document.body.style.overflow = "hidden";
 
@@ -46,6 +69,34 @@ export function GalleryModal() {
       document.body.style.overflow = "auto";
     };
   }, []);
+
+  /*
+  -----------------------------
+  ESC KEY SUPPORT
+  -----------------------------
+  */
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeGallery();
+      }
+
+      if (event.key === "ArrowRight") {
+        nextImage();
+      }
+
+      if (event.key === "ArrowLeft") {
+        prevImage();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [closeGallery, nextImage, prevImage]);
 
   return (
     <div
@@ -58,13 +109,24 @@ export function GalleryModal() {
         items-center
         justify-center
 
+        overflow-hidden
+
         bg-black/92
 
         p-5
 
-        animate-[fadeIn_0.4s_ease-out]
+        animate-[fadeIn_0.35s_ease-out]
       "
     >
+      {/* Backdrop */}
+      <div
+        onClick={closeGallery}
+        className="
+          absolute
+          inset-0
+        "
+      />
+
       {/* Close Button */}
       <button
         onClick={closeGallery}
@@ -181,12 +243,14 @@ export function GalleryModal() {
         <ChevronRight size={22} />
       </button>
 
-      {/* Image */}
+      {/* Image Wrapper */}
       <div
         className="
           relative
+          z-10
 
           flex
+
           h-[82vh]
           w-full
           max-w-5xl
@@ -195,6 +259,7 @@ export function GalleryModal() {
           justify-center
 
           overflow-hidden
+
           rounded-[32px]
         "
       >
@@ -202,9 +267,14 @@ export function GalleryModal() {
           src={currentImage}
           alt={`Gallery ${selectedGalleryIndex + 1}`}
           fill
+          priority
           sizes="100vw"
           className="
             object-contain
+
+            animate-[
+              fadeIn_0.45s_ease-out
+            ]
           "
         />
       </div>
@@ -215,6 +285,7 @@ export function GalleryModal() {
           absolute
           bottom-6
           left-1/2
+          z-20
 
           -translate-x-1/2
 
@@ -229,6 +300,7 @@ export function GalleryModal() {
 
           text-sm
           tracking-[0.2em]
+
           text-white/80
 
           backdrop-blur-xl
