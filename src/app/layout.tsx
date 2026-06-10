@@ -25,7 +25,7 @@ export const metadata = {
     siteName: "Panji & Anita Wedding",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-cover.png",
         width: 1200,
         height: 630,
         alt: "Panji & Anita Wedding",
@@ -38,7 +38,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Panji & Anita Wedding Invitation",
     description: "Join us to celebrate our wedding day.",
-    images: ["/og-image.png"],
+    images: ["/og-cover.png"],
   },
 };
 
