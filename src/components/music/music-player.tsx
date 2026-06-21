@@ -87,8 +87,8 @@ useEffect(() => {
           z-50
 
           flex
-          h-14
-          w-14
+          h-11
+          w-11
           items-center
           justify-center
 
@@ -102,7 +102,7 @@ useEffect(() => {
 
           backdrop-blur-xl
 
-          shadow-[0_8px_30px_rgba(0,0,0,0.12)]
+          shadow-[0_6px_22px_rgba(0,0,0,0.12)]
 
           transition-[transform,background-color,border-color]
           duration-500
@@ -128,9 +128,9 @@ useEffect(() => {
         </AnimatePresence>
 
         {isMusicPlaying ? (
-          <Pause size={18} />
+          <Pause size={16} />
         ) : (
-          <Play size={18} />
+          <Play size={16} />
         )}
       </button>
     </>

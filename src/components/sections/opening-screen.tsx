@@ -30,6 +30,30 @@ const itemVariants = {
   },
 };
 
+// Nested stagger relay — h1 receives "visible" from parent, staggers its name spans
+const nameBlockVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.22,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const nameItemVariants = {
+  hidden: { opacity: 0, y: 20, filter: "blur(2px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      duration: 1.3,
+      ease: EASE_PREMIUM,
+    },
+  },
+};
+
 export function OpeningScreen({ guestName }: OpeningScreenProps) {
   const { openInvitation } = useInvitationStore();
 
@@ -52,6 +76,27 @@ export function OpeningScreen({ guestName }: OpeningScreenProps) {
       {/* Gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/70" />
 
+      {/* Vignette */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0,0,0,0.38) 100%)",
+        }}
+      />
+
+      {/* Grain */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          opacity: 0.04,
+          mixBlendMode: "soft-light",
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          backgroundRepeat: "repeat",
+          backgroundSize: "256px 256px",
+        }}
+      />
+
       {/* Content */}
       <motion.div
         variants={containerVariants}
@@ -61,16 +106,30 @@ export function OpeningScreen({ guestName }: OpeningScreenProps) {
       >
         <motion.p
           variants={itemVariants}
-          className="mb-4 text-xs uppercase tracking-[0.4em] text-white/70"
+          className="mb-4 text-xs uppercase tracking-[0.5em] text-white/60"
         >
           The Wedding Of
         </motion.p>
 
         <motion.h1
-          variants={itemVariants}
+          variants={nameBlockVariants}
           className="max-w-[320px] text-6xl leading-none"
+          style={{ textShadow: "0 2px 20px rgba(0,0,0,0.5)" }}
         >
-          Panji <span className="text-[var(--champagne)]">&</span> Anita
+          <motion.span variants={nameItemVariants} className="inline">
+            Panji
+          </motion.span>
+          {" "}
+          <motion.span
+            variants={nameItemVariants}
+            className="inline text-[var(--champagne)]"
+          >
+            &
+          </motion.span>
+          {" "}
+          <motion.span variants={nameItemVariants} className="inline">
+            Anita
+          </motion.span>
         </motion.h1>
 
         <motion.div

@@ -64,10 +64,17 @@ export function StorySection() {
             Love Story
           </h2>
 
+          {/* Decorative accent */}
+          <div className="mx-auto mt-5 flex items-center justify-center gap-2">
+            <div className="h-px w-8 bg-[rgba(214,185,140,0.5)]" />
+            <span className="text-[10px] text-[var(--champagne)]">✦</span>
+            <div className="h-px w-8 bg-[rgba(214,185,140,0.5)]" />
+          </div>
+
           <p
             className="
               mx-auto
-              mt-6
+              mt-4
               max-w-[320px]
               text-base
               leading-8
@@ -93,7 +100,7 @@ export function StorySection() {
               top-0
               h-full
               w-px
-              bg-black/10
+              bg-[rgba(214,185,140,0.22)]
             "
           />
 
@@ -136,7 +143,7 @@ export function StorySection() {
 
                     bg-[var(--ivory)]
 
-                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    shadow-[0_4px_20px_rgba(0,0,0,0.04),0_0_14px_rgba(214,185,140,0.35)]
                   "
                   >
                     <div
@@ -152,11 +159,13 @@ export function StorySection() {
                   {/* Content Card */}
                   <div
                     className="
+                    relative
                     flex-1
+                    overflow-hidden
 
                     rounded-[28px]
 
-                    border border-black/5
+                    border border-[rgba(214,185,140,0.18)]
 
                     bg-white/40
 
@@ -167,6 +176,9 @@ export function StorySection() {
                     shadow-[0_10px_40px_rgba(0,0,0,0.04)]
                   "
                   >
+                    {/* Inner highlight */}
+                    <div className="absolute inset-0 rounded-[28px] bg-gradient-to-b from-white/25 to-transparent pointer-events-none" />
+
                     <p
                       className="
                       text-xs
