@@ -4,14 +4,11 @@ import { motion } from "framer-motion";
 
 import { navigationItems } from "../../data/navigation";
 
-import { useInvitationStore } from "../../stores/invitation";
 import { getLenis } from "../../lib/lenis";
 
 const EASE_PREMIUM = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
 export function FloatingNavbar() {
-  const activeSection = useInvitationStore((state) => state.activeSection);
-
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
 
@@ -20,7 +17,7 @@ export function FloatingNavbar() {
     const lenis = getLenis();
 
     if (lenis) {
-      lenis.scrollTo(element, { offset: 0 });
+      lenis.scrollTo(element, { offset: 0, duration: 1.4 });
     } else {
       element.scrollIntoView({ behavior: "instant", block: "start" });
     }
@@ -55,7 +52,7 @@ export function FloatingNavbar() {
         px-4
         py-3
 
-        backdrop-blur-xl
+        backdrop-blur-md
 
         shadow-[
           0_12px_40px_rgba(
@@ -70,15 +67,13 @@ export function FloatingNavbar() {
       {navigationItems.map((item) => {
         const Icon = item.icon;
 
-        const isActive = item.id === activeSection;
-
         return (
           <button
             key={item.id}
             title={item.id}
             aria-label={`Navigate to ${item.id} section`}
             onClick={() => scrollToSection(item.id)}
-            className={`
+            className="
               group
 
               relative
@@ -92,58 +87,20 @@ export function FloatingNavbar() {
 
               rounded-full
 
-              transition-all
-              duration-500
+              transition-colors
+              transition-transform
+              duration-300
 
+              text-white/70
+
+              hover:text-white
+              hover:bg-white/10
+              hover:shadow-[0_0_20px_rgba(255,255,255,0.08)]
+
+              active:bg-white/15
               active:scale-90
-
-              ${
-                isActive
-                  ? `
-                    scale-105
-                    text-white
-                  `
-                  : `
-                    text-white/65
-
-                    hover:bg-white/10
-                    hover:text-white
-
-                    active:bg-white/15
-
-                    hover:shadow-[
-                      0_0_20px_rgba(
-                        255,
-                        255,
-                        255,
-                        0.08
-                      )
-                    ]
-                  `
-              }
-            `}
+            "
           >
-            {isActive && (
-              <motion.div
-                layoutId="navbar-active-indicator"
-                className="
-                  absolute
-                  inset-0
-
-                  rounded-full
-
-                  bg-[rgba(214,185,140,0.18)]
-
-                  shadow-[0_0_30px_rgba(214,185,140,0.22)]
-                "
-                transition={{
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 35,
-                }}
-              />
-            )}
-
             <Icon
               size={18}
               className="

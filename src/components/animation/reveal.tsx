@@ -28,11 +28,11 @@ export function Reveal({
 
       viewport={{
         once: true,
-        amount: 0.2,
+        amount: 0.1,
       }}
 
       transition={{
-        duration: 1,
+        duration: 0.7,
         delay,
         ease: [0.22, 1, 0.36, 1],
       }}
