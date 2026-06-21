@@ -3,10 +3,61 @@
 import { useEffect, useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
+import { User } from "lucide-react";
 import { useInvitationStore } from "../../stores/invitation";
 import { Reveal } from "../animation/reveal";
 
 const EASE_PREMIUM = [0.22, 1, 0.36, 1] as [number, number, number, number];
+
+function WishAvatar({ name }: { name: string }) {
+  const [hasError, setHasError] = useState(false);
+  const src = `https://api.dicebear.com/9.x/lorelei-neutral/svg?seed=${encodeURIComponent(name)}`;
+
+  return (
+    <div
+      className="
+        relative
+        flex
+        h-12
+        w-12
+        shrink-0
+        items-center
+        justify-center
+        overflow-hidden
+        rounded-full
+        border border-[rgba(214,185,140,0.32)]
+        bg-gradient-to-br
+        from-[rgba(214,185,140,0.30)]
+        to-[rgba(214,185,140,0.10)]
+        shadow-[0_4px_16px_rgba(214,185,140,0.18)]
+        transition-transform
+        duration-300
+        [@media(hover:hover)]:hover:scale-[1.05]
+      "
+    >
+      {hasError ? (
+        <User
+          size={22}
+          strokeWidth={1.5}
+          aria-hidden="true"
+          className="text-[var(--champagne)] opacity-50"
+        />
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={src}
+          alt={name}
+          width={48}
+          height={48}
+          loading="lazy"
+          decoding="async"
+          onError={() => setHasError(true)}
+          className="h-full w-full object-cover"
+        />
+      )}
+    </div>
+  );
+}
 
 export function WishesSection() {
   const wishes = useInvitationStore((state) => state.wishes);
@@ -104,179 +155,128 @@ export function WishesSection() {
       {!isLoading && wishes.length > 0 && (
       <div className="space-y-5">
         <AnimatePresence>
-        {wishes.map((wish, index) => {
-          const initials = wish.name
+        {wishes.map((wish, index) => (
+          <motion.div
+            key={wish.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{
+              duration: 0.6,
+              delay: index * 0.07,
+              ease: EASE_PREMIUM,
+            }}
+            className="
+              rounded-[28px]
 
-            .split(" ")
+              border border-[
+                rgba(0,0,0,0.06)
+              ]
 
-            .map((word) => word[0])
+              bg-white/55
 
-            .join("")
+              p-6
 
-            .slice(0, 2);
+              backdrop-blur-xl
 
-          return (
-            <motion.div
-              key={wish.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{
-                duration: 0.6,
-                delay: index * 0.07,
-                ease: EASE_PREMIUM,
-              }}
-              className="
-                rounded-[28px]
+              shadow-[
+                0_12px_40px_rgba(
+                  0,
+                  0,
+                  0,
+                  0.05
+                )
+              ]
 
-                border border-[
-                  rgba(0,0,0,0.06)
-                ]
+              transition-[
+                transform,
+                border-color,
+                background-color
+              ]
 
-                bg-white/55
+              duration-500
 
-                p-6
+              hover:translate-y-[-2px]
 
-                backdrop-blur-xl
+              hover:border-[
+                rgba(214,185,140,0.25)
+              ]
 
-                shadow-[
-                  0_12px_40px_rgba(
-                    0,
-                    0,
-                    0,
-                    0.05
-                  )
-                ]
+              hover:bg-white/60
+            "
+          >
+            <div className="flex gap-4">
+              {/* Avatar */}
+              <WishAvatar name={wish.name} />
 
-                transition-[
-                  transform,
-                  border-color,
-                  background-color
-                ]
-
-                duration-500
-
-                hover:translate-y-[-2px]
-
-                hover:border-[
-                  rgba(214,185,140,0.25)
-                ]
-
-                hover:bg-white/60
-              "
-            >
-              <div className="flex gap-4">
-                {/* Avatar */}
+              {/* Content */}
+              <div className="flex-1">
                 <div
                   className="
                     flex
-                    h-12
-                    w-12
-                    shrink-0
                     items-center
-                    justify-center
-
-                    rounded-full
-
-                    border border-[
-                      rgba(
-                        214,
-                        185,
-                        140,
-                        0.18
-                      )
-                    ]
-
-                    bg-[
-                      rgba(
-                        214,
-                        185,
-                        140,
-                        0.22
-                      )
-                    ]
-
-                    text-sm
-                    font-medium
-                    uppercase
-
-                    text-[
-                      var(--soft-black)
-                    ]
+                    justify-between
+                    gap-3
                   "
                 >
-                  {initials}
-                </div>
-
-                {/* Content */}
-                <div className="flex-1">
-                  <div
-                    className="
-                      flex
-                      items-center
-                      justify-between
-                      gap-3
-                    "
-                  >
-                    <div>
-                      <h3
-                        className="
-                          text-[1.1rem]
-                          font-medium
-                        "
-                      >
-                        {wish.name}
-                      </h3>
-
-                      <p
-                        className="
-                          mt-1
-
-                          text-xs
-                          uppercase
-
-                          tracking-[0.16em]
-
-                          text-black/50
-                        "
-                      >
-                        {wish.attendance}
-
-                        {wish.guest_count > 1 &&
-                          ` · ${wish.guest_count} Guests`}
-                      </p>
-                    </div>
+                  <div>
+                    <h3
+                      className="
+                        text-[1.1rem]
+                        font-medium
+                      "
+                    >
+                      {wish.name}
+                    </h3>
 
                     <p
                       className="
+                        mt-1
+
                         text-xs
-                        text-black/30
+                        uppercase
+
+                        tracking-[0.16em]
+
+                        text-black/50
                       "
                     >
-                      {formatDistanceToNow(
-                        new Date(wish.created_at),
-                        { addSuffix: true },
-                      )}
+                      {wish.attendance}
+
+                      {wish.guest_count > 1 &&
+                        ` · ${wish.guest_count} Guests`}
                     </p>
                   </div>
 
                   <p
                     className="
-                      mt-4
-
-                      text-sm
-                      leading-7
-
-                      text-black/60
+                      text-xs
+                      text-black/30
                     "
                   >
-                    {wish.message}
+                    {formatDistanceToNow(
+                      new Date(wish.created_at),
+                      { addSuffix: true },
+                    )}
                   </p>
                 </div>
+
+                <p
+                  className="
+                    mt-4
+
+                    text-sm
+                    leading-7
+
+                    text-black/60
+                  "
+                >
+                  {wish.message}
+                </p>
               </div>
-            </motion.div>
-          );
-        })}
+            </div>
+          </motion.div>
+        ))}
         </AnimatePresence>
       </div>
       )}
