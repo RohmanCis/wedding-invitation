@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { Pause, Play } from "lucide-react";
 
 import { useInvitationStore }
@@ -113,6 +114,19 @@ useEffect(() => {
           active:scale-95
         "
       >
+        <AnimatePresence>
+          {isMusicPlaying && (
+            <motion.span
+              key="pulse-ring"
+              className="absolute inset-0 rounded-full border border-[rgba(214,185,140,0.5)]"
+              initial={{ scale: 1, opacity: 0.6 }}
+              animate={{ scale: [1, 1.55], opacity: [0.6, 0] }}
+              exit={{ opacity: 0, transition: { duration: 0.3 } }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
+            />
+          )}
+        </AnimatePresence>
+
         {isMusicPlaying ? (
           <Pause size={18} />
         ) : (

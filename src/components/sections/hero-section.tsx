@@ -338,11 +338,24 @@ export function HeroSection() {
                 <h3
                   className="
                     text-[2rem]
-                      tracking-[0.04em]
-                      font-medium
+                    tracking-[0.04em]
+                    font-medium
+                    tabular-nums
+                    overflow-hidden
                   "
                 >
-                  {item.value}
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={item.value}
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 8 }}
+                      transition={{ duration: 0.18, ease: "easeOut" }}
+                      className="block"
+                    >
+                      {item.value}
+                    </motion.span>
+                  </AnimatePresence>
                 </h3>
 
                 <p

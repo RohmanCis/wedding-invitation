@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { weddingData } from "../../data/wedding";
 import { Reveal } from "../animation/reveal";
 
@@ -77,8 +80,13 @@ export function StorySection() {
 
         {/* Timeline */}
         <div className="relative">
-          {/* Center Line */}
-          <div
+          {/* Center Line — draws top to bottom as section enters view */}
+          <motion.div
+            initial={{ scaleY: 0 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 2.5, ease: "easeInOut" }}
+            style={{ originY: 0 }}
             className="
               absolute
               left-5
@@ -101,7 +109,16 @@ export function StorySection() {
                 "
                 >
                   {/* Timeline Dot */}
-                  <div
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 24,
+                      delay: index * 0.14,
+                    }}
                     className="
                     relative
                     z-10
@@ -130,7 +147,7 @@ export function StorySection() {
                       bg-[var(--champagne)]
                     "
                     />
-                  </div>
+                  </motion.div>
 
                   {/* Content Card */}
                   <div

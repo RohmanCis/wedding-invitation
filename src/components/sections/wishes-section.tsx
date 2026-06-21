@@ -2,8 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { formatDistanceToNow } from "date-fns";
+import { AnimatePresence, motion } from "framer-motion";
 import { useInvitationStore } from "../../stores/invitation";
 import { Reveal } from "../animation/reveal";
+
+const EASE_PREMIUM = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
 export function WishesSection() {
   const wishes = useInvitationStore((state) => state.wishes);
@@ -100,7 +103,8 @@ export function WishesSection() {
 
       {!isLoading && wishes.length > 0 && (
       <div className="space-y-5">
-        {wishes.map((wish) => {
+        <AnimatePresence>
+        {wishes.map((wish, index) => {
           const initials = wish.name
 
             .split(" ")
@@ -112,8 +116,16 @@ export function WishesSection() {
             .slice(0, 2);
 
           return (
-            <div
+            <motion.div
               key={wish.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.07,
+                ease: EASE_PREMIUM,
+              }}
               className="
                 rounded-[28px]
 
@@ -262,9 +274,10 @@ export function WishesSection() {
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           );
         })}
+        </AnimatePresence>
       </div>
       )}
     </section>
