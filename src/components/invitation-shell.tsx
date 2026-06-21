@@ -15,6 +15,9 @@ import { GiftSection } from "./sections/gift-section";
 import { HeroSection } from "./sections/hero-section";
 import { FooterSection } from "./sections/footer-section";
 import { useEffect } from "react";
+import Lenis from "lenis";
+import { setLenis } from "../lib/lenis";
+
 type InvitationShellProps = {
   guestName: string;
 };
@@ -24,8 +27,33 @@ export function InvitationShell({ guestName }: InvitationShellProps) {
 
   useEffect(() => {
     window.history.scrollRestoration = "manual";
-
     window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const lenis = new Lenis({
+      lerp: 0.08,
+      smoothWheel: true,
+    });
+
+    setLenis(lenis);
+
+    let rafId: number;
+
+    const raf = (time: number) => {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    };
+
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+      setLenis(null);
+    };
   }, []);
   
   return (

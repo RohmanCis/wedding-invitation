@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 
-import { Reveal } from "../animation/reveal";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+
+import { useInvitationStore } from "../../stores/invitation";
 
 const HERO_IMAGES = [
   "/images/hero-1.jpeg",
@@ -37,10 +38,36 @@ const calculateTimeLeft = () => {
   };
 };
 
+const EASE_PREMIUM = [0.22, 1, 0.36, 1] as [number, number, number, number];
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.3,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1,
+      ease: EASE_PREMIUM,
+    },
+  },
+};
+
 export function HeroSection() {
   const [currentImage, setCurrentImage] = useState(0);
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft);
+
+  const isOpened = useInvitationStore((state) => state.isOpened);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -59,6 +86,7 @@ export function HeroSection() {
 
     return () => clearInterval(interval);
   }, []);
+
   return (
     <section
       id="home"
@@ -114,19 +142,6 @@ export function HeroSection() {
           </motion.div>
         </AnimatePresence>
       </div>
-
-      {/* <div
-        className="
-        absolute
-        inset-0
-
-        opacity-[0.05]
-
-        mix-blend-soft-light
-
-        bg-[url('/images/noise.png')]
-      "
-      /> */}
 
       {/* Overlay */}
       <div
@@ -184,8 +199,13 @@ export function HeroSection() {
           text-white
         "
       >
-        <Reveal>
-          <p
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={isOpened ? "visible" : "hidden"}
+        >
+          <motion.p
+            variants={itemVariants}
             className="
               text-xs
               uppercase
@@ -194,10 +214,11 @@ export function HeroSection() {
             "
           >
             The Wedding Of
-          </p>
+          </motion.p>
 
           <h1 className="mt-6">
-            <span
+            <motion.span
+              variants={itemVariants}
               className="
                 block
                 text-7xl
@@ -205,10 +226,11 @@ export function HeroSection() {
               "
             >
               Panji
-            </span>
+            </motion.span>
 
-            <span
+            <motion.span
               aria-hidden="true"
+              variants={itemVariants}
               className="
                 my-5
                 block
@@ -217,11 +239,12 @@ export function HeroSection() {
               "
             >
               &
-            </span>
+            </motion.span>
 
             <span className="sr-only">and</span>
 
-            <span
+            <motion.span
+              variants={itemVariants}
               className="
                 block
                 text-7xl
@@ -229,10 +252,11 @@ export function HeroSection() {
               "
             >
               Anita
-            </span>
+            </motion.span>
           </h1>
 
-          <p
+          <motion.p
+            variants={itemVariants}
             className="
               mt-8
               text-sm
@@ -242,12 +266,11 @@ export function HeroSection() {
             "
           >
             Sunday, 12 December 2026
-          </p>
-        </Reveal>
+          </motion.p>
 
-        {/* Countdown */}
-        <Reveal delay={0.2}>
-          <div
+          {/* Countdown */}
+          <motion.div
+            variants={itemVariants}
             className="
               mt-14
 
@@ -335,12 +358,11 @@ export function HeroSection() {
                 </p>
               </div>
             ))}
-          </div>
-        </Reveal>
+          </motion.div>
 
-        {/* Scroll Indicator */}
-        <Reveal delay={0.4}>
-          <div
+          {/* Scroll Indicator */}
+          <motion.div
+            variants={itemVariants}
             className="
               mt-16
               flex
@@ -375,8 +397,8 @@ export function HeroSection() {
                 "
               />
             </div>
-          </div>
-        </Reveal>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

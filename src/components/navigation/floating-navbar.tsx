@@ -3,6 +3,7 @@
 import { navigationItems } from "../../data/navigation";
 
 import { useInvitationStore } from "../../stores/invitation";
+import { getLenis } from "../../lib/lenis";
 
 export function FloatingNavbar() {
   const activeSection = useInvitationStore((state) => state.activeSection);
@@ -12,10 +13,13 @@ export function FloatingNavbar() {
 
     if (!element) return;
 
-    element.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
+    const lenis = getLenis();
+
+    if (lenis) {
+      lenis.scrollTo(element, { offset: 0 });
+    } else {
+      element.scrollIntoView({ behavior: "instant", block: "start" });
+    }
   };
 
   return (
