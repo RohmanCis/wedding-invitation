@@ -5,6 +5,7 @@ export const weddingData = {
     father: "Mr. Hadi",
     mother: "Mrs. Yani",
     image: "/images/bride.jpg",
+    instagram: "https://instagram.com/anita",
   },
 
   groom: {
@@ -13,6 +14,7 @@ export const weddingData = {
     father: "Mr. Susanto",
     mother: "Mrs. Triani",
     image: "/images/groom.jpg",
+    instagram: "https://instagram.com/panji",
   },
 
   events: [
