@@ -15,6 +15,7 @@ import { GiftSection } from "./sections/gift-section";
 import { HeroSection } from "./sections/hero-section";
 import { FooterSection } from "./sections/footer-section";
 import { useEffect } from "react";
+import { MotionConfig } from "framer-motion";
 import Lenis from "lenis";
 import { setLenis } from "../lib/lenis";
 
@@ -57,34 +58,36 @@ export function InvitationShell({ guestName }: InvitationShellProps) {
   }, []);
   
   return (
-    <>
-      {!isOpened && <OpeningScreen guestName={guestName} />}
+    <MotionConfig reducedMotion="user">
+      <>
+        {!isOpened && <OpeningScreen guestName={guestName} />}
 
-      <main
-        className={`
-          transition-all
-          duration-1000
-          ${
-            isOpened
-              ? "opacity-100 translate-y-0"
-              : "pointer-events-none opacity-0 translate-y-10"
-          }
-        `}
-      >
-        <HeroSection />
-      </main>
+        <main
+          className={`
+            transition-all
+            duration-1000
+            ${
+              isOpened
+                ? "opacity-100 translate-y-0"
+                : "pointer-events-none opacity-0 translate-y-10"
+            }
+          `}
+        >
+          <HeroSection />
+        </main>
 
-      {isOpened && <MusicPlayer />}
-      {isOpened && <FloatingNavbar />}
-      {isOpened && <CoupleSection />}
-      {isOpened && <StorySection />}
-      {isOpened && <EventSection />}
-      {isOpened && <GallerySection />}
-      {isOpened && <RSVPSection />}
-      {isOpened && <WishesSection />}
-      {isOpened && <GiftSection />}
-      {isOpened && <FooterSection />}
-      {isOpened && <GalleryModal />}
-    </>
+        {isOpened && <MusicPlayer />}
+        {isOpened && <FloatingNavbar />}
+        {isOpened && <CoupleSection />}
+        {isOpened && <StorySection />}
+        {isOpened && <EventSection />}
+        {isOpened && <GallerySection />}
+        {isOpened && <RSVPSection />}
+        {isOpened && <WishesSection />}
+        {isOpened && <GiftSection />}
+        {isOpened && <FooterSection />}
+        {isOpened && <GalleryModal />}
+      </>
+    </MotionConfig>
   );
 }

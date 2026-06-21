@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion, MotionConfig } from "framer-motion";
+import { motion } from "framer-motion";
 
 function InstagramIcon({ size = 14 }: { size?: number }) {
   return (
@@ -107,9 +107,8 @@ export function CoupleSection() {
   const { bride, groom } = weddingData;
 
   return (
-    <MotionConfig reducedMotion="user">
-      <section
-        id="couple"
+    <section
+      id="couple"
         className="
           section-padding
           relative
@@ -505,7 +504,6 @@ export function CoupleSection() {
             </div>
           </div>
         </div>
-      </section>
-    </MotionConfig>
+    </section>
   );
 }

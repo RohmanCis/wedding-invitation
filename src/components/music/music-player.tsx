@@ -22,6 +22,8 @@ const setMusicPlaying =
   useInvitationStore(
     (state) => state.setMusicPlaying
   );
+
+// Handles user-triggered play/pause toggles
 useEffect(() => {
 
   const audio = audioRef.current;
@@ -57,18 +59,27 @@ useEffect(() => {
 
 }, [isMusicPlaying]);
 
+// Attempt autoplay once on mount — set state only if browser permits
 useEffect(() => {
 
-  setMusicPlaying(true);
+  const audio = audioRef.current;
 
-}, [setMusicPlaying]);
+  if (!audio) return;
+
+  audio.play()
+    .then(() => setMusicPlaying(true))
+    .catch(() => { /* Autoplay blocked — Play button remains shown */ });
+
+  // setMusicPlaying is a stable Zustand reference
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
 
   return (
     <>
       <audio
         ref={audioRef}
         loop
-        preload="auto"
+        preload="none"
         playsInline
         autoPlay={false}
       >

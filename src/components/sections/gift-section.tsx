@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Copy, Check } from "lucide-react";
-import { motion, MotionConfig } from "framer-motion";
+import { motion } from "framer-motion";
 import { weddingData } from "../../data/wedding";
 
 const EASE_PREMIUM = [0.22, 1, 0.36, 1] as [number, number, number, number];
@@ -59,14 +59,13 @@ export function GiftSection() {
   };
 
   return (
-    <MotionConfig reducedMotion="user">
-      <section
-        className="
-          section-padding
-          relative
-          overflow-hidden
-        "
-      >
+    <section
+      className="
+        section-padding
+        relative
+        overflow-hidden
+      "
+    >
         {/* Ambient Glow + Sparkles */}
         <div className="absolute inset-0 pointer-events-none">
           <div
@@ -349,7 +348,6 @@ export function GiftSection() {
             </div>
           </div>
         </div>
-      </section>
-    </MotionConfig>
+    </section>
   );
 }

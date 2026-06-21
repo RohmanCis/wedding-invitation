@@ -1,3 +1,5 @@
+"use client";
+
 import { CalendarDays, Clock3, MapPin } from "lucide-react";
 
 import { weddingData } from "../../data/wedding";

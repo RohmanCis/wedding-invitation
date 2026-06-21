@@ -171,16 +171,24 @@ export function GalleryModal() {
             <ChevronRight size={22} />
           </button>
 
-          {/* Image Container */}
+          {/* Image Container — drag="x" enables swipe navigation on touch */}
           <motion.div
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.35, ease: EASE_PREMIUM }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.15}
+            onDragEnd={(_, info) => {
+              if (info.offset.x < -50) navigate(1);
+              else if (info.offset.x > 50) navigate(-1);
+            }}
             className="
               relative z-10
               h-[82vh] w-full max-w-5xl
               overflow-hidden
               rounded-[32px]
+              cursor-grab active:cursor-grabbing
             "
           >
             <AnimatePresence mode="wait" custom={direction}>

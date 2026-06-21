@@ -270,6 +270,7 @@ export function RSVPSection() {
             {/* Attendance */}
             <div className="space-y-3">
               <label
+                id="attendance-label"
                 className="
                   text-xs
                   uppercase
@@ -281,7 +282,7 @@ export function RSVPSection() {
                 Attendance
               </label>
 
-              <Listbox value={attendance} onChange={setAttendance}>
+              <Listbox aria-labelledby="attendance-label" value={attendance} onChange={setAttendance}>
                 <div className="relative">
                   <ListboxButton
                     className={`

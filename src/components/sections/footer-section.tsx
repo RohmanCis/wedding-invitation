@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import { ArrowUp } from "lucide-react";
-import { AnimatePresence, motion, MotionConfig } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { getLenis } from "../../lib/lenis";
 import { Reveal } from "../animation/reveal";
 
 const EASE_PREMIUM = [0.22, 1, 0.36, 1] as [number, number, number, number];
@@ -66,12 +67,13 @@ export function FooterSection() {
   }, [footerImages.length]);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const lenis = getLenis();
+    if (lenis) lenis.scrollTo(0);
+    else window.scrollTo({ top: 0 });
   };
 
   return (
-    <MotionConfig reducedMotion="user">
-      <footer
+    <footer
         className="
           relative
           overflow-hidden
@@ -322,6 +324,7 @@ export function FooterSection() {
 
             <motion.div
               variants={nameItemVariants}
+              aria-hidden="true"
               className="
                 my-4
                 text-2xl
@@ -330,6 +333,7 @@ export function FooterSection() {
             >
               &
             </motion.div>
+            <span className="sr-only">and</span>
 
             <motion.h3
               variants={nameItemVariants}
@@ -427,7 +431,6 @@ export function FooterSection() {
             </div>
           </Reveal>
         </div>
-      </footer>
-    </MotionConfig>
+    </footer>
   );
 }

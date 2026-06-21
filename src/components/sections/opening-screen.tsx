@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useInvitationStore } from "../../stores/invitation";
 
@@ -60,15 +61,16 @@ export function OpeningScreen({ guestName }: OpeningScreenProps) {
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
       {/* Background */}
-      <div
-        className="
-          absolute inset-0
-          scale-105
-          bg-[url('/images/hero.jpg')]
-          bg-cover
-          bg-center
-        "
-      />
+      <div className="absolute inset-0 scale-105 overflow-hidden">
+        <Image
+          src="/images/hero.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+      </div>
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/30" />
@@ -123,9 +125,11 @@ export function OpeningScreen({ guestName }: OpeningScreenProps) {
           <motion.span
             variants={nameItemVariants}
             className="inline text-[var(--champagne)]"
+            aria-hidden="true"
           >
             &
           </motion.span>
+          <span className="sr-only">and</span>
           {" "}
           <motion.span variants={nameItemVariants} className="inline">
             Anita

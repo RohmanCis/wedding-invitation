@@ -24,7 +24,6 @@ type InvitationState = {
   isMusicPlaying: boolean;
   selectedGalleryIndex: number | null;
   activeSection: string;
-  isCopied: boolean;
   wishes: Wish[];
   fetchWishes: () => Promise<void>;
   openInvitation: () => void;
@@ -39,10 +38,6 @@ type InvitationState = {
   ) => void;
 
   closeGallery: () => void;
-
-  setCopied: (
-    value: boolean
-  ) => void;
 
   setActiveSection: (
     section: string
@@ -62,8 +57,6 @@ export const useInvitationStore =
       selectedGalleryIndex: null,
 
       activeSection: "home",
-
-      isCopied: false,
 
       openInvitation: () =>
         set({
@@ -94,13 +87,6 @@ export const useInvitationStore =
           selectedGalleryIndex: null,
         }),
 
-      setCopied: (
-        value
-      ) =>
-        set({
-          isCopied: value,
-        }),
-
       setActiveSection: (
         section
       ) =>
@@ -108,6 +94,7 @@ export const useInvitationStore =
           activeSection:
             section,
         }),
+
       fetchWishes: async () => {
 
         const {
@@ -124,7 +111,8 @@ export const useInvitationStore =
             {
               ascending: false,
             }
-          );
+          )
+          .limit(20);
 
         if (error) {
 
