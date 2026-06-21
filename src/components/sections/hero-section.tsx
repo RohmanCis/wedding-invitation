@@ -6,64 +6,55 @@ import { Reveal } from "../animation/reveal";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
+const HERO_IMAGES = [
+  "/images/hero-1.jpeg",
+  "/images/hero-2.jpeg",
+  "/images/hero-3.jpeg",
+];
+
+const WEDDING_DATE = new Date("2026-12-12T08:00:00").getTime();
+
+const calculateTimeLeft = () => {
+  const distance = WEDDING_DATE - new Date().getTime();
+
+  if (distance <= 0) {
+    return { days: "00", hours: "00", minutes: "00", seconds: "00" };
+  }
+
+  return {
+    days: Math.floor(distance / (1000 * 60 * 60 * 24))
+      .toString()
+      .padStart(2, "0"),
+    hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      .toString()
+      .padStart(2, "0"),
+    minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+      .toString()
+      .padStart(2, "0"),
+    seconds: Math.floor((distance % (1000 * 60)) / 1000)
+      .toString()
+      .padStart(2, "0"),
+  };
+};
+
 export function HeroSection() {
-  const heroImages = [
-    "/images/hero-1.jpeg",
-    "/images/hero-2.jpeg",
-    "/images/hero-3.jpeg",
-  ];
   const [currentImage, setCurrentImage] = useState(0);
 
-  const [timeLeft, setTimeLeft] = useState({
-    days: "00",
-    hours: "00",
-    minutes: "00",
-    seconds: "00",
-  });
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prev) =>
-        prev === heroImages.length - 1 ? 0 : prev + 1,
+        prev === HERO_IMAGES.length - 1 ? 0 : prev + 1,
       );
     }, 6500);
 
     return () => clearInterval(interval);
-  }, [heroImages.length]);
+  }, []);
 
   useEffect(() => {
-    const weddingDate = new Date("2026-12-12T08:00:00").getTime();
-
     const interval = setInterval(() => {
-      const now = new Date().getTime();
-
-      const distance = weddingDate - now;
-
-      if (distance <= 0) {
-        clearInterval(interval);
-
-        return;
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-
-      const hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-      );
-
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      setTimeLeft({
-        days: days.toString().padStart(2, "0"),
-
-        hours: hours.toString().padStart(2, "0"),
-
-        minutes: minutes.toString().padStart(2, "0"),
-
-        seconds: seconds.toString().padStart(2, "0"),
-      });
+      setTimeLeft(calculateTimeLeft());
     }, 1000);
 
     return () => clearInterval(interval);
@@ -89,7 +80,7 @@ export function HeroSection() {
       >
         <AnimatePresence mode="wait">
           <motion.div
-            key={heroImages[currentImage]}
+            key={HERO_IMAGES[currentImage]}
             initial={{
               opacity: 0,
               scale: 1,
@@ -111,7 +102,7 @@ export function HeroSection() {
     "
           >
             <Image
-              src={heroImages[currentImage]}
+              src={HERO_IMAGES[currentImage]}
               alt="Wedding Hero"
               fill
               priority
@@ -124,7 +115,7 @@ export function HeroSection() {
         </AnimatePresence>
       </div>
 
-      <div
+      {/* <div
         className="
         absolute
         inset-0
@@ -135,7 +126,7 @@ export function HeroSection() {
 
         bg-[url('/images/noise.png')]
       "
-      />
+      /> */}
 
       {/* Overlay */}
       <div
@@ -205,33 +196,40 @@ export function HeroSection() {
             The Wedding Of
           </p>
 
-          <h1
-            className="
-              mt-6
-              text-7xl
-              leading-none
-            "
-          >
-            Panji
-          </h1>
+          <h1 className="mt-6">
+            <span
+              className="
+                block
+                text-7xl
+                leading-none
+              "
+            >
+              Panji
+            </span>
 
-          <div
-            className="
-              my-5
-              text-3xl
-              text-[var(--champagne)]
-            "
-          >
-            &
-          </div>
+            <span
+              aria-hidden="true"
+              className="
+                my-5
+                block
+                text-3xl
+                text-[var(--champagne)]
+              "
+            >
+              &
+            </span>
 
-          <h1
-            className="
-              text-7xl
-              leading-none
-            "
-          >
-            Anita
+            <span className="sr-only">and</span>
+
+            <span
+              className="
+                block
+                text-7xl
+                leading-none
+              "
+            >
+              Anita
+            </span>
           </h1>
 
           <p

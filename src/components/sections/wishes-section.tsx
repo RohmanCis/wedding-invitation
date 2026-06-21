@@ -1,15 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatDistanceToNow } from "date-fns";
 import { useInvitationStore } from "../../stores/invitation";
 
 export function WishesSection() {
   const wishes = useInvitationStore((state) => state.wishes);
-
   const fetchWishes = useInvitationStore((state) => state.fetchWishes);
+
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    fetchWishes();
-  }, []);
+    fetchWishes().finally(() => setIsLoading(false));
+  }, [fetchWishes]);
 
   return (
     <section
@@ -61,6 +64,38 @@ export function WishesSection() {
       </div>
 
       {/* Feed */}
+      {isLoading && (
+        <div className="space-y-5">
+          {[1, 2, 3].map((i) => (
+            <div
+              key={i}
+              className="
+                h-28
+                animate-pulse
+                rounded-[28px]
+                border border-[rgba(0,0,0,0.06)]
+                bg-white/55
+                backdrop-blur-xl
+              "
+            />
+          ))}
+        </div>
+      )}
+
+      {!isLoading && wishes.length === 0 && (
+        <p
+          className="
+            py-12
+            text-center
+            text-base
+            text-black/50
+          "
+        >
+          Couldn&apos;t load messages — try refreshing.
+        </p>
+      )}
+
+      {!isLoading && wishes.length > 0 && (
       <div className="space-y-5">
         {wishes.map((wish) => {
           const initials = wish.name
@@ -203,7 +238,10 @@ export function WishesSection() {
                         text-black/30
                       "
                     >
-                      Just now
+                      {formatDistanceToNow(
+                        new Date(wish.created_at),
+                        { addSuffix: true },
+                      )}
                     </p>
                   </div>
 
@@ -225,6 +263,7 @@ export function WishesSection() {
           );
         })}
       </div>
+      )}
     </section>
   );
 }

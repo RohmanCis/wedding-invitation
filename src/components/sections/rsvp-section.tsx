@@ -69,7 +69,7 @@ export function RSVPSection() {
 
   const fetchWishes = useInvitationStore((state) => state.fetchWishes);
 
-  const { register, handleSubmit, reset } = useForm<RSVPFormData>({
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<RSVPFormData>({
     defaultValues: {
       guestCount: 1,
     },
@@ -211,8 +211,6 @@ export function RSVPSection() {
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="
-            scroll-mt-32
-
             rounded-[32px]
 
             border border-white/20
@@ -237,6 +235,7 @@ export function RSVPSection() {
             {/* Name */}
             <div className="space-y-3">
               <label
+                htmlFor="rsvp-name"
                 className="
                   text-xs
                   uppercase
@@ -249,11 +248,20 @@ export function RSVPSection() {
               </label>
 
               <input
+                id="rsvp-name"
                 type="text"
                 placeholder="Your name"
-                {...register("name")}
+                {...register("name", {
+                  required: "Please enter your name",
+                })}
                 className={inputClassName}
               />
+
+              {errors.name && (
+                <p className="mt-2 text-xs text-red-400">
+                  {errors.name.message}
+                </p>
+              )}
             </div>
 
             {/* Attendance */}
@@ -394,6 +402,7 @@ export function RSVPSection() {
             {/* Guest Count */}
             <div className="space-y-3">
               <label
+                htmlFor="rsvp-guest-count"
                 className="
                   text-xs
                   uppercase
@@ -406,6 +415,7 @@ export function RSVPSection() {
               </label>
 
               <input
+                id="rsvp-guest-count"
                 type="number"
                 {...register("guestCount", {
                   valueAsNumber: true,
@@ -418,6 +428,7 @@ export function RSVPSection() {
             {/* Wishes */}
             <div className="space-y-3">
               <label
+                htmlFor="rsvp-message"
                 className="
                   text-xs
                   uppercase
@@ -430,6 +441,7 @@ export function RSVPSection() {
               </label>
 
               <textarea
+                id="rsvp-message"
                 rows={5}
                 placeholder="Write your wishes..."
                 {...register("message")}

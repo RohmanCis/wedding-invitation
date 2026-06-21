@@ -29,6 +29,7 @@ body {
     var(--background);
 
   overflow-x: hidden;
+  overscroll-behavior-y: none;
 }
 
 h1,
@@ -78,10 +79,4 @@ a {
   to {
     opacity: 1;
   }
-}
-html {
-  scroll-behavior: smooth;
-}
-body {
-  overscroll-behavior-y: none;
 }
