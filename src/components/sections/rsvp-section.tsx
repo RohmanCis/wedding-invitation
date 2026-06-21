@@ -16,6 +16,7 @@ import {
 import { toast } from "sonner";
 
 import { supabase } from "../../lib/supabase";
+import { Reveal } from "../animation/reveal";
 
 import { useInvitationStore } from "../../stores/invitation";
 
@@ -163,49 +164,51 @@ export function RSVPSection() {
         "
       >
         {/* Heading */}
-        <div
-          className="
-            mb-16
-            text-center
-          "
-        >
-          <p
+        <Reveal>
+          <div
             className="
-              text-xs
-              uppercase
-              tracking-[0.35em]
-
-              text-[var(--mocha)]
+              mb-16
+              text-center
             "
           >
-            Confirmation
-          </p>
+            <p
+              className="
+                text-xs
+                uppercase
+                tracking-[0.35em]
 
-          <h2
-            className="
-              mt-5
-              text-5xl
-              leading-none
-            "
-          >
-            RSVP
-          </h2>
+                text-[var(--mocha)]
+              "
+            >
+              Confirmation
+            </p>
 
-          <p
-            className="
-              mx-auto
-              mt-6
-              max-w-[320px]
+            <h2
+              className="
+                mt-5
+                text-5xl
+                leading-none
+              "
+            >
+              RSVP
+            </h2>
 
-              text-base
-              leading-8
+            <p
+              className="
+                mx-auto
+                mt-6
+                max-w-[320px]
 
-              text-black/60
-            "
-          >
-            Kindly confirm your attendance and share your warm wishes.
-          </p>
-        </div>
+                text-base
+                leading-8
+
+                text-black/60
+              "
+            >
+              Kindly confirm your attendance and share your warm wishes.
+            </p>
+          </div>
+        </Reveal>
 
         {/* Form Card */}
         <form

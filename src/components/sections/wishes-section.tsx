@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { useInvitationStore } from "../../stores/invitation";
+import { Reveal } from "../animation/reveal";
 
 export function WishesSection() {
   const wishes = useInvitationStore((state) => state.wishes);
@@ -24,44 +25,46 @@ export function WishesSection() {
       "
     >
       {/* Heading */}
-      <div className="mb-16 text-center">
-        <p
-          className="
-            text-xs
-            uppercase
-            tracking-[0.35em]
-            text-[var(--mocha)]
-          "
-        >
-          Warm Wishes
-        </p>
+      <Reveal>
+        <div className="mb-16 text-center">
+          <p
+            className="
+              text-xs
+              uppercase
+              tracking-[0.35em]
+              text-[var(--mocha)]
+            "
+          >
+            Warm Wishes
+          </p>
 
-        <h2
-          className="
-            mt-5
-            text-5xl
-            leading-none
-          "
-        >
-          Messages
-        </h2>
+          <h2
+            className="
+              mt-5
+              text-5xl
+              leading-none
+            "
+          >
+            Messages
+          </h2>
 
-        <p
-          className="
-            mx-auto
-            mt-6
-            max-w-[320px]
+          <p
+            className="
+              mx-auto
+              mt-6
+              max-w-[320px]
 
-            text-base
-            leading-8
+              text-base
+              leading-8
 
-            text-black/68
-            font-[425]
-          "
-        >
-          Beautiful words and heartfelt prayers from beloved family and friends.
-        </p>
-      </div>
+              text-black/68
+              font-[425]
+            "
+          >
+            Beautiful words and heartfelt prayers from beloved family and friends.
+          </p>
+        </div>
+      </Reveal>
 
       {/* Feed */}
       {isLoading && (

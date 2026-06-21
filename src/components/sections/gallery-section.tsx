@@ -1,9 +1,12 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { weddingData } from "../../data/wedding";
 import { useInvitationStore } from "../../stores/invitation";
 import { Reveal } from "../animation/reveal";
+
+const EASE_PREMIUM = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
 export function GallerySection() {
   const { gallery } = weddingData;
@@ -36,13 +39,19 @@ export function GallerySection() {
         {/* Grid */}
         <div className="grid grid-cols-2 gap-4">
           {gallery.map((image, index) => {
-            // Proteksi path biar selalu absolute dari root folder public
             const safeSrc = image.startsWith("/") ? image : `/${image}`;
 
             return (
-              // Highlight: Properti key sekarang dipindah ke div utama ini
-              <div
+              <motion.div
                 key={`${safeSrc}-${index}`}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.05 }}
+                transition={{
+                  duration: 0.8,
+                  delay: index * 0.07,
+                  ease: EASE_PREMIUM,
+                }}
                 className={`${
                   index % 3 === 0 ? "col-span-2 h-[320px]" : "h-[220px]"
                 }`}
@@ -69,7 +78,7 @@ export function GallerySection() {
                   {/* Soft Glow */}
                   <div className="absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100 shadow-[inset_0_0_80px_rgba(255,255,255,0.06)]" />
                 </button>
-              </div>
+              </motion.div>
             );
           })}
         </div>
